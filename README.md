@@ -16,6 +16,10 @@ from hex to int
 $ hex2int 0xasd787t8sa
 ```
 
+```
+$ hex2int [file name]
+```
+
 from int to hex
 
 ```

@@ -1,7 +1,17 @@
 #!/usr/bin/env ruby
 
 def values
-  ARGV.select{|a| /^[^-]/ =~ a }
+  ARGV
+    .select{|a| /^[^-]/ =~ a }
+    .map{ |a| 
+      if File.exist?(a)
+        File.open(a, "r").each_line.to_a.map { |l|
+          /0[x|X][A-Za-z0-9]+/.match(l).to_s.downcase
+        }.select{ |l| l }
+      else
+        a
+      end
+    }.flatten
 end
 
 #
