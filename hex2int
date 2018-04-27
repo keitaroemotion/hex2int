@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+def values
+  ARGV.select{|a| /^[^-]/ =~ a }
+end
+
+#
+# if no option found, hex -> int
+#
+
+def int_to_hex(i)
+  return i.to_i.to_s(16)
+end
+
+def cvt(f)
+  q = {
+    "a" => 10,
+    "b" => 11,
+    "c" => 12,
+    "d" => 13,
+    "e" => 14,
+    "f" => 15,
+  }
+  return (/^[a-f]$/ =~ f ? q[f] : f).to_i
+end
+
+def hex_to_int(x)
+  hex = 0
+  x.chars[2..-1].map{ |x| cvt(x) }.reverse.each_with_index do |_x, i|
+    hex += _x * (16 ** i)
+  end
+  return hex
+end
+
+values.each do |v|
+  if /^0x/ =~ v
+    puts "#{v} => #{hex_to_int(v)}"
+  else
+    puts "#{v} => 0x#{int_to_hex(v)}"
+  end
+end
