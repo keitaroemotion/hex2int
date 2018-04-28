@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 
+def opts
+  ARGV
+    .select{|a| /^[-]/ =~ a }
+end
+
 def values
   ARGV
     .select{|a| /^[^-]/ =~ a }
@@ -12,6 +17,10 @@ def values
         a
       end
     }.flatten
+    .select{|a|
+      /^[a-fA-F0-9]+$/ =~ a || puts("[INVALID] #{a}")
+      /^[a-fA-F0-9]+$/ =~ a
+    }
 end
 
 #
@@ -19,7 +28,11 @@ end
 #
 
 def int_to_hex(i)
-  return i.to_i.to_s(16)
+  res = i.to_i.to_s(16)
+  if opts.include?("-u")
+    res = res.upcase
+  end
+  return res
 end
 
 def cvt(f)
@@ -34,10 +47,24 @@ def cvt(f)
   return (/^[a-f]$/ =~ f ? q[f] : f).to_i
 end
 
+def cms(n)
+  i = 0
+  return n.to_s.chars.reverse.map { |x|
+    i += 1
+    if i % 3 == 0 && i != n.to_s.chars.size
+      x = ",#{x}"
+    end
+    x
+  }.reverse.join
+end
+
 def hex_to_int(x)
   hex = 0
   x.chars[2..-1].map{ |x| cvt(x) }.reverse.each_with_index do |_x, i|
     hex += _x * (16 ** i)
+  end
+  if opts.include?("-c")
+    hex = cms(hex)
   end
   return hex
 end
