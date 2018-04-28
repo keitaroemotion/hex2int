@@ -18,6 +18,7 @@ def values
       end
     }.flatten
     .select{|a|
+      a = a[2..-1] if a.start_with?("0x")
       /^[a-fA-F0-9]+$/ =~ a || puts("[INVALID] #{a}")
       /^[a-fA-F0-9]+$/ =~ a
     }
@@ -36,6 +37,7 @@ def int_to_hex(i)
 end
 
 def cvt(f)
+  f = f.downcase
   q = {
     "a" => 10,
     "b" => 11,

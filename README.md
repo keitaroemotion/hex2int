@@ -23,9 +23,9 @@ $ hex2int [file name]
 if you want to comma(,) separated result, add `-c` option.
 
 ```
-$ hex2int 0xasd787t8sa -c
+$ hex2int 0xafd787b8fa -c
 
-> 0xafd787t8fa => 755,235,227,898
+> 0xafd787b8fa => 755,235,272,954
 ```
 
 from int to hex
@@ -38,6 +38,7 @@ if you want to make it upcase, add `-u` option.
 
 ```
 $ hex2int 123651 -u
+> 123651 => 0x1E303
 ```
 
 
