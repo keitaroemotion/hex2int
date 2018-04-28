@@ -17,8 +17,12 @@ def values
         a
       end
     }.flatten
-    .select{|a|
+    .map{|a|
+      a = a.gsub(",", "")  
       a = a[2..-1] if a.start_with?("0x")
+      a
+    }
+    .select{|a|
       /^[a-fA-F0-9]+$/ =~ a || puts("[INVALID] #{a}")
       /^[a-fA-F0-9]+$/ =~ a
     }
